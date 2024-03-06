@@ -31,6 +31,7 @@ def couleur(index, Len, palette):
         x = (index/Len*n - cmax) / (cmin - cmax)
         cmin = mc.to_rgb(palette[int(cmin)])
         cmax = mc.to_rgb(palette[int(cmax)])      
+    
         return (x*cmin[0]+(1-x)*cmax[0], x*cmin[1]+(1-x)*cmax[1], x*cmin[2]+(1-x)*cmax[2])
     else:
         return palette[int(cmin)]
@@ -56,3 +57,19 @@ def color_marker(color, alpha=0.6):
 rainbowcmap = [mc.to_rgb(couleur(i, 256, palette)) for i in range(256)]
 tempcmap = [mc.to_rgb(couleur(i, 256, paletteT)) for i in range(256)]
 speedcmap = [mc.to_rgb(couleur(i, 256, palettev)) for i in range(256)]
+mycmapR = mc.ListedColormap(rainbowcmap)
+mycmapT = mc.ListedColormap(tempcmap)
+mycmapV = mc.ListedColormap(speedcmap)
+
+def set_size(w, h, ax=None):
+    if not ax: ax=plt.gca()
+
+    l = ax.figure.subplotpars.left
+    r = ax.figure.subplotpars.right
+    t = ax.figure.subplotpars.top
+    b = ax.figure.subplotpars.bottom
+
+    figw = float(w)/(r-l)
+    figh = float(h)/(t-b)
+    
+    ax.figure.set_size_inches(figw,figh)
